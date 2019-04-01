@@ -1,0 +1,123 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+}
+
+#order += "ipv6"
+#order += "disk /"
+#order += "wireless _first_"
+#order += "ethernet _first_"
+#order += "battery all"
+#order += "load"
+#order += "tztime local"
+#order += "conky cpu"
+#order += "conky memory"
+#order += "conky swap"
+#order += "conky diskio"
+order += "conky info"
+#order += "clock"
+order += "i3block time"
+
+# Show the time and date in New York
+clock {
+   format = "{Asia/Kolkata}"
+   format_time = "%a %Y-%m-%d %I:%M:%S%P"
+}
+
+# display diskio read, write, etc
+conky diskio {
+    format = 'Disk IO [\?color=darkgray&show sda] '
+    format += '[\?color=lightskyblue '
+    format += '{diskio_read sda}/{diskio_write sda} '
+    format += '({diskio sda})]'
+
+    # format += ' '
+    # format += '[\?color=darkgray&show sdb] '
+    # format += '[\?color=lightskyblue '
+    # format += '{diskio_read sdb}/{diskio_write sdb} '
+    # format += '({diskio sdb})]'
+    config = {'short_units': True}
+}
+
+# show more examples, many outputs
+conky info {
+    format = '[\?color=title&show CPU] [\?color=output {cpu cpu0}% {cpu cpu1}%] '
+    format += '[\?color=title&show MEM] [\?color=output {mem}/{memmax} ({memperc}%)] '
+    format += '[\?color=title&show SWP] [\?color=output {swap}/{swapmax} ({swapperc}%)] '
+    format += '[\?color=title&show HDD] [\?color=output {diskio_read sda}/{diskio_write sda}] '
+    format += '[\?color=title&show NET] [\?color=output {upspeed wlp2s0f0}/{downspeed wlp2s0f0}]'
+    color_title = '#ffffff'
+    color_output = '#00bfff'
+}
+
+# display memory, memperc, membar + thresholds
+conky memory {
+    format = 'Memory [\?color=lightskyblue {mem}/{memmax}] '
+#    format += '[\?color=memperc {memperc}% \[{membar}\]]'
+#    thresholds = [
+#        (0, 'darkgray'), (0.001, 'good'), (50, 'degraded'),
+#        (75, 'orange'), (85, 'bad')
+#    ]
+}
+
+# display swap, swapperc, swapbar + thresholds
+conky swap {
+    format = 'Swap [\?color=lightcoral {swap}/{swapmax}] '
+#    format += '[\?color=swapperc {swapperc}% \[{swapbar}\]]'
+#    thresholds = [
+#        (0, 'darkgray'), (0.001, 'good'), (50, 'degraded'),
+#        (75, 'orange'), (85, 'bad')
+#    ]
+}
+
+# show cpu percents/bars + thresholds
+conky cpu {
+    format = 'CPU '
+    format += '[\?color=cpu.cpu0 {cpu cpu0}% {cpubar cpu0}] '
+    format += '[\?color=cpu.cpu1 {cpu cpu1}% {cpubar cpu1}] '
+
+    thresholds = [
+        (0, 'darkgray'), (0.001, 'good'), (50, 'degraded'),
+        (75, 'orange'), (85, 'bad')
+    ]
+}
+
+i3block time {
+	command = "echo \"`date +'%a %d %b'` `date +'%T'`\"; [[ -z \"${BLOCK_BUTTON}\" ]] || gsimplecal &"
+	interval = 1
+}
+
+wireless _first_ {
+        format_up = "W: (%quality at %essid) %ip"
+        format_down = "W: down"
+}
+
+ethernet _first_ {
+        # if you use %speed, i3status requires root privileges
+        format_up = "E: %ip (%speed)"
+        format_down = "E: down"
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+        format = "%1min"
+}
+
+disk "/" {
+        format = "%avail"
+}
