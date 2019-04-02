@@ -53,7 +53,8 @@ conky info {
     format += '[\?color=title&show MEM] [\?color=output {mem}/{memmax} ({memperc}%)] '
     format += '[\?color=title&show SWP] [\?color=output {swap}/{swapmax} ({swapperc}%)] '
     format += '[\?color=title&show HDD] [\?color=output {diskio_read sda}/{diskio_write sda}] '
-    format += '[\?color=title&show NET] [\?color=output {upspeed wlp2s0f0}/{downspeed wlp2s0f0}]'
+    format += '[\?color=title&show NET] [\?color=output {upspeed enp0s3}/{downspeed enp0s3}]'
+    format += '[\?color=title&show BAT] [\?color=output {battery_percent BAT0}%]'
     color_title = '#ffffff'
     color_output = '#00bfff'
 }
