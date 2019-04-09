@@ -24,6 +24,7 @@ general {
 #order += "conky diskio"
 order += "conky info"
 #order += "clock"
+order += "volume_status"
 order += "i3block time"
 
 # Show the time and date in New York
@@ -49,11 +50,13 @@ conky diskio {
 
 # show more examples, many outputs
 conky info {
-    format = '[\?color=title&show CPU] [\?color=output {cpu cpu0}% {cpu cpu1}%] '
-    format += '[\?color=title&show MEM] [\?color=output {mem}/{memmax} ({memperc}%)] '
-    format += '[\?color=title&show SWP] [\?color=output {swap}/{swapmax} ({swapperc}%)] '
-    format += '[\?color=title&show HDD] [\?color=output {diskio_read sda}/{diskio_write sda}] '
-    format += '[\?color=title&show NET] [\?color=output {upspeed wlp2s0f0}/{downspeed wlp2s0f0}]'
+    format = '[\?color=title&show CPU] [\?color=output {cpu cpu0}%] '
+    format += '[\?color=title&show MEM] [\?color=output {memperc}%] '
+    format += '[\?color=title&show SWP] [\?color=output {swap}] '
+    format += '[\?color=title&show TMP] [\?color=output {acpitemp}℃] '
+    format += '[\?color=title&show HDD] [\?color=output {diskio sda}] '
+    #format += '[\?color=title&show HDD] [\?color=output {diskio_read sda}/{diskio_write sda}] '
+    format += '[\?color=title&show NET] [\?color=output {upspeedf wlp2s0f0}/{downspeedf wlp2s0f0}]'
     color_title = '#ffffff'
     color_output = '#00bfff'
 }
@@ -120,4 +123,19 @@ load {
 
 disk "/" {
         format = "%avail"
+}
+
+volume_status {
+    thresholds = [
+        (0, "#FF0000"),
+        (10, "#E2571E"),
+        (20, "#FF7F00"),
+        (30, "#FFFF00"),
+        (40, "#00FF00"),
+        (50, "#96BF33"),
+        (60, "#0000FF"),
+        (70, "#4B0082"),
+        (80, "#8B00FF"),
+        (90, "#FFFFFF")
+    ]
 }
