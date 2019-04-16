@@ -15,7 +15,8 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 8
-font pango:Fira Code 10
+#font pango:Font Awesome 5 Free Regular 12
+font pango:Cantarell 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -97,8 +98,8 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
+set $ws1 "1:"
+set $ws2 "2:"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
@@ -171,7 +172,7 @@ bindsym $mod+r mode "resize"
 bar {
 	position top
 	#height $barh
-	font pango:Fira Code 10
+	font pango:Source Code Pro 11
 	status_command py3status
 colors {
     # <bar>
@@ -233,3 +234,25 @@ client.focused_inactive #C1C1C1 $lightg $white $green
 client.unfocused        #414141 $darkg $white $lightg
 client.urgent 		#FFCB21 $yellow $white $red
 
+
+set $Locker i3lock && sleep 1
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Pause mode "$mode_system"
+
+assign [class="^Terminator$"] $ws1
+assign [class="^Chromium$"] $ws2
+assign [class="^Emacs$"] $ws3

@@ -11,6 +11,10 @@ general {
         interval = 5
 }
 
+py3status {
+	markup = 'pango'
+}
+
 #order += "ipv6"
 #order += "disk /"
 #order += "wireless _first_"
@@ -23,6 +27,7 @@ general {
 #order += "conky swap"
 #order += "conky diskio"
 order += "conky info"
+#order += "i3block conky"
 #order += "clock"
 order += "volume_status"
 order += "i3block time"
@@ -50,15 +55,19 @@ conky diskio {
 
 # show more examples, many outputs
 conky info {
-    format = '[\?color=title&show CPU] [\?color=output {cpu cpu0}%] '
-    format += '[\?color=title&show MEM] [\?color=output {memperc}%] '
-    format += '[\?color=title&show SWP] [\?color=output {swap}] '
-    format += '[\?color=title&show TMP] [\?color=output {acpitemp}℃] '
-    format += '[\?color=title&show HDD] [\?color=output {diskio sda}] '
+    format = '[\?color=title&show <span font="Font Awesome 5 Free Regular"></span>] [\?color=output {cpu cpu0}%] '
+    format += '[\?color=title&show <span font="Font Awesome 5 Free Regular"></span>] [\?color=output {memperc}% {swapperc}%] '
+    #format += '[\?color=title&show SWP] [\?color=output {swapperc}%] '
+    format += '[\?color=title&show <span font="Font Awesome 5 Free Regular"></span>] [\?color=output {acpitemp}℃] '
+    format += '[\?color=title&show <span font="Font Awesome 5 Free Solid"></span>] [\?color=output {diskio sda}] '
     #format += '[\?color=title&show HDD] [\?color=output {diskio_read sda}/{diskio_write sda}] '
-    format += '[\?color=title&show NET] [\?color=output {upspeedf wlp2s0f0}/{downspeedf wlp2s0f0}]'
+    format += '[\?color=title&show <span font="Font Awesome 5 Free Regular"></span>] [\?color=output {upspeedf wlp2s0f0}/{downspeedf wlp2s0f0}]'
     color_title = '#ffffff'
     color_output = '#00bfff'
+    config = {
+        'update_interval': 1,
+        'short_units': True
+    }
 }
 
 # display memory, memperc, membar + thresholds
@@ -91,6 +100,11 @@ conky cpu {
         (0, 'darkgray'), (0.001, 'good'), (50, 'degraded'),
         (75, 'orange'), (85, 'bad')
     ]
+}
+
+i3block conky {
+	command = 'conky -c /home/${USER}/.config/i3status/conky-config'
+	cache_timeout = 'persist'
 }
 
 i3block time {

@@ -94,6 +94,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias e="emacsclient"
+alias ec="emacsclient -c"
+#alias E="SUDO_EDITOR=\"emacsclient\" sudo -e"
+alias E="sudoedit"
 
 source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
