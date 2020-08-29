@@ -6,9 +6,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 
+# Custom configurations
+
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
     command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
@@ -22,48 +25,51 @@ autoload -Uz _zinit
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
-    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-rust \
     zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
     zinit-zsh/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
 
-if [ ! "$TMUX" = "" ]; then export TERM=xterm-256color; fi
 
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+# Fast-syntax-highlighting, autosuggestions and completions
+zinit wait lucid for \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
+        zdharma/fast-syntax-highlighting \
+    atload"!_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+    blockf \
+        zsh-users/zsh-completions
+
+
+# Powerlevel10k theme
+zinit depth=1 for romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source /usr/share/fonts/awesome-terminal-fonts/devicons-regular.sh
-source /usr/share/fonts/awesome-terminal-fonts/fontawesome-regular.sh
-source /usr/share/fonts/awesome-terminal-fonts/octicons-regular.sh
-source /usr/share/fonts/awesome-terminal-fonts/pomicons-regular.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Two regular plugins loaded without tracking.
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
 
-zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
-zinit light trapd00r/LS_COLORS
+# Oh My Zsh Setup
+zinit svn multisrc"*.zsh" as"null" for OMZ::lib
 
-zinit ice blockf
-zinit light zsh-users/zsh-completions
-
-zinit ice svn multisrc"*.zsh" as"null"
-zinit snippet OMZ::lib
-
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit snippet OMZ::plugins/fzf/fzf.plugin.zsh
-zinit snippet OMZ::plugins/colorize/colorize.plugin.zsh
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
-zinit snippet OMZ::plugins/safe-paste/safe-paste.plugin.zsh
-zinit snippet OMZ::plugins/systemd/systemd.plugin.zsh
-zinit snippet OMZ::plugins/lol/lol.plugin.zsh
-zinit snippet OMZ::plugins/rand-quote/rand-quote.plugin.zsh
+# Oh My Zsh plugins
+zinit snippet OMZP::alias-finder
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::colored-man-pages
+# zinit snippet OMZP::emacs
+zinit snippet OMZP::git
+zinit snippet OMZP::gitignore
+zinit snippet OMZP::lol
+zinit snippet OMZP::rand-quote
+zinit snippet OMZP::safe-paste
+zinit snippet OMZP::sudo
+zinit snippet OMZP::systemd
 
 
-zstyle ':completion:*:*:mpv:*' file-patterns '*.(#i)(flv|mp4|webm|mkv|wmv|mov|avi|mp3|ogg|wma|flac|wav|aiff|m4a|m4b|m4v|gif|ifo)(-.) *(-/):directories' '*:all-files'
+# Zinit packages
+# zpm-zsh/dircolors-material Zinit package
+zinit pack for dircolors-material
 
-autoload -Uz compinit
-compinit
-zinit cdreplay -q
+# junegunn/fzf Zinit package
+zinit pack"bgn-binary+keys" for fzf
