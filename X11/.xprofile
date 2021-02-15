@@ -1,3 +1,2 @@
 # Using gtk2 theme for Qt 5 applications
 export QT_QPA_PLATFORMTHEME=gtk2
-

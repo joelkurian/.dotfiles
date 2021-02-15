@@ -1,0 +1,38 @@
+<!DOCTYPE patchbay>
+<patchbay name="OBS" version="0.9.0">
+ <output-sockets>
+  <socket name="Game Output" exclusive="off" type="jack-audio" client="Game\ Output">
+   <plug>front\-left</plug>
+   <plug>front\-right</plug>
+  </socket>
+  <socket name="Discord Output" exclusive="off" type="jack-audio" client="Discord\ Output">
+   <plug>front\-left</plug>
+   <plug>front\-right</plug>
+  </socket>
+  <socket name="Music Output" exclusive="off" type="jack-audio" client="Music\ Output">
+   <plug>front\-left</plug>
+   <plug>front\-right</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket name="OBS Game Output" exclusive="off" type="jack-audio" client="OBS\ Game\ Output">
+   <plug>in_1</plug>
+   <plug>in_2</plug>
+  </socket>
+  <socket name="OBS Discord Output" exclusive="off" type="jack-audio" client="OBS\ Discord\ Output">
+   <plug>in_1</plug>
+   <plug>in_2</plug>
+  </socket>
+  <socket name="OBS Music Output" exclusive="off" type="jack-audio" client="OBS\ Music\ Output">
+   <plug>in_1</plug>
+   <plug>in_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable input="OBS Game Output" type="jack-audio" output="Game Output"/>
+  <cable input="OBS Discord Output" type="jack-audio" output="Discord Output"/>
+  <cable input="OBS Music Output" type="jack-audio" output="Music Output"/>
+ </cables>
+</patchbay>
+

@@ -33,21 +33,19 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 
-# Fast-syntax-highlighting, autosuggestions and completions
-zinit wait lucid for \
-    atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
-        zdharma/fast-syntax-highlighting \
-    atload"!_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions \
-    blockf \
-        zsh-users/zsh-completions
-
-
 # Powerlevel10k theme
 zinit depth=1 for romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# Fast-syntax-highlighting
+zinit light zdharma/fast-syntax-highlighting \
+
+
+# Autosuggestions
+zinit atload"!_zsh_autosuggest_start" for zsh-users/zsh-autosuggestions
 
 
 # Oh My Zsh Setup
@@ -57,10 +55,10 @@ zinit svn multisrc"*.zsh" as"null" for OMZ::lib
 zinit snippet OMZP::alias-finder
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::colored-man-pages
-# zinit snippet OMZP::emacs
 zinit snippet OMZP::git
 zinit snippet OMZP::gitignore
 zinit snippet OMZP::lol
+zinit snippet OMZP::otp
 zinit snippet OMZP::rand-quote
 zinit snippet OMZP::safe-paste
 zinit snippet OMZP::sudo
@@ -73,3 +71,15 @@ zinit pack for dircolors-material
 
 # junegunn/fzf Zinit package
 zinit pack"bgn-binary+keys" for fzf
+
+
+# Completions
+# Loading this last so that zinit captures all compdef functions
+zinit blockf for zsh-users/zsh-completions
+
+zicompinit
+zicdreplay
+
+# Custom completions
+# zinit atload"!source <(bw completion --shell zsh);compdef _bw bw" for zdharma/null
+source <(bw completion --shell zsh); compdef _bw bw
